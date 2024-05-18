@@ -43,13 +43,15 @@
     <!-- Page CSS -->
     <!-- Page -->
     <link rel="stylesheet" href="/admin-assets/vendor/css/pages/page-auth.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
     <!-- Helpers -->
     <script src="/admin-assets/vendor/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="/admin-assets/js/config.js"></script>
-    @notifyCss
+
   </head>
 
   <body>
@@ -179,8 +181,6 @@
         </div>
       </div>
     </div>
-    @include('notify::components.notify')
-            <x:notify-messages />
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
@@ -196,12 +196,40 @@
 
     <!-- Main JS -->
     <script src="/admin-assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <!-- Page JS -->
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-    @notifyJs
+  
+  <script>
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+    @if(session('success'))
+        toastr.success("{{ session('success') }}", "Welcome {{ session('username') }}");
+    @endif
+
+    @if(session('error'))
+        toastr.error("{{ session('error') }}", "Error");
+    @endif
+</script>
 
   </body>
 </html>

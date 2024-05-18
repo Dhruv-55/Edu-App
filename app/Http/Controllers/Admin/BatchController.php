@@ -29,8 +29,7 @@ class BatchController extends Controller
                 'admin_id' => Session::get('admin')->id
             ]);
 
-            notify()->success('Batch Created','Success');
-            return redirect()->route('batch-view');
+            return redirect()->route('batch-view')->with(['success','Batch Created']);
         }
         return view('admin.batches.create');
     }
@@ -48,8 +47,7 @@ class BatchController extends Controller
             $batch->status = $request->status;
             $batch->save();
 
-            notify()->success('Batch Updated','Success');
-            return redirect()->route('batch-view');
+            return redirect()->route('batch-view')->with(['success','Batch Updated']);
         }
 
         return view('admin.batches.update',[

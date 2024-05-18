@@ -12,7 +12,11 @@ class BatchSubject extends Model
     const ACTIVE = 1, INACTIVE =2 ;
 
     protected $fillable = [
-        'batch_id','subject_id','admin_id','status'
+        'batch_id','subjects','admin_id','status'
+    ];
+
+    protected $casts = [
+        'subjects' => 'array'
     ];
 
     public function admin(){

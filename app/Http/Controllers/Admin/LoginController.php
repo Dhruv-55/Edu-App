@@ -33,9 +33,12 @@ class LoginController extends Controller
              if( ! Hash::check($request->password,$admin->password) )   
                  return redirect()->back()->with(['error' => 'Invalid Password']);
 
-                session(['admin' => $admin]);
-                notify()->success('Login Successful', 'Welcome '.$admin->username);
-            return redirect()->route('admin-dashboard');
+            if($admin->status == Admin::INACTIVE)
+                return redirect()->back()->with(['error' => 'Your Account Is In Active..Kindly Contact Developers']);
+
+
+            session(['admin' => $admin]);
+            return redirect()->route('admin-dashboard')->with(['success' => 'Login Successful']);
         }
         return view('admin.login');
 

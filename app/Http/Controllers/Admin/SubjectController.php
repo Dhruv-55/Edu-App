@@ -30,8 +30,7 @@ class SubjectController extends Controller
                 'admin_id' => Session::get('admin')->id
             ]);
 
-            notify()->success('Subject Created','Success');
-            return redirect()->route('subject-view');
+            return redirect()->route('subject-view')->with(['success' => 'Subject Created']);
            
         }
         return view('admin.subjects.create');
@@ -51,8 +50,7 @@ class SubjectController extends Controller
             $subject->status = $request->status;
             $subject->save();
 
-            notify()->success('Subject Updated','Success');
-            return redirect()->route('subject-view');
+            return redirect()->route('subject-view')->with(['success' => 'Subject Updated']);
         }
 
         return view('admin.subjects.update',[

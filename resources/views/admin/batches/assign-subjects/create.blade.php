@@ -23,7 +23,7 @@
                     @foreach( $subjects as $subject )
 
                     <div class="form-check mb-3">
-                      <input class="form-check-input" type="checkbox" name="subject_id[]" value="{{ $subject->id }}" id="defaultCheck{{ $subject->id}}" />
+                      <input class="form-check-input" type="checkbox" name="subjects[]" value="{{ $subject->name }}" id="defaultCheck{{ $subject->id}}" />
                       <label class="form-check-label" for="defaultCheck{{ $subject->id}}"> {{ $subject->name }} </label>
                     </div>
                     @endforeach

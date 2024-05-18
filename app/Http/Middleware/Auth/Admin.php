@@ -18,10 +18,11 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-      if (!Session::has('admin')) {
+      if (Session::has('admin') && Session::get('admin')->status !=2 ) {
+          return $next($request);
+        }else{
           return redirect()->route('admin-login');
         }
 
-           return $next($request);
     }
 }

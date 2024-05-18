@@ -34,8 +34,7 @@ class AdminController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-            notify()->success('Admin Created','Success');
-            return redirect()->route('admin-view');
+            return redirect()->route('admin-view')->with(['success' => 'Admin Created']);
         }
         return view('admin.admins.create');
     }
@@ -56,8 +55,7 @@ class AdminController extends Controller
             $admin->status = $request->status;
             $admin->save();
 
-            notify()->success('Admin Updated','Success');
-            return redirect()->route('admin-view');
+            return redirect()->route('admin-view')->with(['success','Admin Updated']);
         }
         return view('admin.admins.update',[
             'admin' => $admin

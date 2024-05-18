@@ -29,20 +29,13 @@ class BatchSubjectController extends Controller
                 'subject_id.*.required' => 'Please Select Subject'
             ]);
 
-            foreach ($request->subject_id as $subject_id) {
-                if(BatchSubject::where('class_id',$request->batch_id)->where('subject_id',$subject_id) ->exists() )
-                   {
-                    return  redirect()->back();
-                   }
-
-                BatchSubject::create([
+             BatchSubject::create([
                 'batch_id' => $request->batch_id,
-                'subject_id' => $subject_id,
-                'admin_id' => Session::get('admin')->id
-             ]);
-            }
-            notify()->success('Subject Assigned','Success');
-            return redirect()->route('batch-subject-view');
+                'subjects' => $request->subjects,
+                'admin_id' =>  Session::get('admin')->id,
+             ]);   
+
+            return redirect()->route('batch-subject-view')->with(['success' => 'Subject Assigned']);
            
         }
 
@@ -52,16 +45,26 @@ class BatchSubjectController extends Controller
         ]);
     }
 
-    // public function update(Request $request){
-    //     if(  !$assign_subject = BatchSubject::where('id',$request->id)->first()){
-    //         notify()->error('Record Not Found','Error');
-    //         return redirect()->back();
-    //     }
+    public function update(Request $request){
+        if(  !$assign_subject = BatchSubject::where('id',$request->id)->first()){
+            notify()->error('Record Not Found','Error');
+            return redirect()->back();
+        }
 
-    //     return view('admin.batch.assign-subjects.update',[
-    //         'assign_subject' => $assign_subject,
-    //         'subjects' => Subject::where('status',1)->get(),
-    //         'batches' => Batch::where('status',1)->get() 
-    //     ]);
-    // }
+        if($request->isMethod('post')){
+            $assign_subject->batch_id = $request->batch_id;
+            $assign_subject->subjects = $request->subjects;
+            $assign_subject->status - $request->status;
+            $assign_subject->save();
+
+            return redirect()->route('batch-subject-view')->with(['success' => 'Subject Updated']);
+         
+        }
+
+        return view('admin.batches.assign-subjects.update',[
+            'assign_subject' => $assign_subject,
+            'subjects' => Subject::where('status',1)->get(),
+            'batches' => Batch::where('status',1)->get() 
+        ]);
+    }
 }

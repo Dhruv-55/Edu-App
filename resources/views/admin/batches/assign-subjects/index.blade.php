@@ -18,7 +18,7 @@
                   <th>#</th>
                   <th>Created At</th>
                   <th>Batch</th>
-                  <th>Subject</th>
+                  <th>Subjecst</th>
                   <th>Created By</th>
                   <th>Status</th>
                   <th>Actions</th>
@@ -31,7 +31,7 @@
                         <td> {{ $index+1}} </td>
                         <td>{{ $record->created_at->format('d m Y') }}</td>
                           <td>{{ $record->batch->name}}</td>
-                          <td>{{  $record->subject->name }}</td>
+                          <td>    {{ collect($record->subjects)->implode(', ') }}</td>
                           <td>{{ $record->admin->name }}</td>
                           <td>
                             @if($record->status == App\Models\Subject::ACTIVE)

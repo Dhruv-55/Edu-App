@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('batch_subjects', function (Blueprint $table) {
             $table->id();
-            $table->integer('class_id');
-            $table->integer('subject_id');
+            $table->integer('batch_id');
+            $table->longText('subjects');
             $table->integer('admin_id');
             $table->enum('status', ['1', '2'])->comment('1 : Active , 2 : In Active')->default('1');
             $table->timestamps();
